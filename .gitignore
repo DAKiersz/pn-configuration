@@ -1,0 +1,14 @@
+# Created by https://www.toptal.com/developers/gitignore/api/ansible,powershell
+# Edit at https://www.toptal.com/developers/gitignore?templates=ansible,powershell
+
+### Ansible ###
+*.retry
+
+### PowerShell ###
+# Exclude packaged modules
+*.zip
+
+# Exclude .NET assemblies from source
+*.dll
+
+# End of https://www.toptal.com/developers/gitignore/api/ansible,powershell
