@@ -1,0 +1,93 @@
+- name: Ensure tlp and thinkpad dependencies are installed
+  ansible.builtin.package:
+    name: "{{ packages.tlp }}"
+    state: present
+
+- name: Create a new tlp config file
+  ansible.builtin.file:
+    path: /etc/tlp.conf
+    state: touch
+    owner: root
+    group: root
+    mode: 0644
+
+# * General Settings
+- name: Enable tlp in config
+  ansible.builtin.lineinfile:
+    path: /etc/tlp.conf
+    regexp: "^TLP_ENABLE="
+    line: "TLP_ENABLE=1"
+
+- name: Tlp default mode to AC
+  ansible.builtin.lineinfile:
+    path: /etc/tlp.conf
+    regexp: "^TLP_DEFAULT_MODE="
+    line: "TLP_DEFAULT_MODE=AC"
+
+- name: Disable persistent mode (i.e., be adaptive depending on the power source)
+  ansible.builtin.lineinfile:
+    path: /etc/tlp.conf
+    regexp: "^TLP_PERSISTENT_DEFAULT="
+    line: "TLP_PERSISTENT_DEFAULT=1"
+
+# * Battery Settings
+- name: Change maximum charge to 80%
+  ansible.builtin.lineinfile:
+    path: /etc/tlp.conf
+    regexp: "^CHARGE_THRESH_BAT{{ item }}="
+    line: "CHARGE_THRESH_BAT{{ item }}=80"
+  loop:
+    - 0
+    - 1
+
+# * CPU Settings
+- name: Enable CPU boosting on AC
+  ansible.builtin.lineinfile:
+    path: /etc/tlp.conf
+    regexp: "^CPU_BOOST_ON_AC="
+    line: "CPU_BOOST_ON_AC=1"
+
+- name: Set CPU governor to performance on AC
+  ansible.builtin.lineinfile:
+    path: /etc/tlp.conf
+    regexp: "^CPU_SCALING_GOVERNOR_ON_AC="
+    line: "CPU_SCALING_GOVERNOR_ON_AC=performance"
+
+- name: Set CPU governor to powersave on BAT
+  ansible.builtin.lineinfile:
+    path: /etc/tlp.conf
+    regexp: "^CPU_SCALING_GOVERNOR_ON_BAT="
+    line: "CPU_SCALING_GOVERNOR_ON_BAT=powersave"
+
+- name: Set CPU energy performance preference to performance on AC
+  ansible.builtin.lineinfile:
+    path: /etc/tlp.conf
+    regexp: "^CPU_ENERGY_PERF_POLICY_ON_AC="
+    line: "CPU_ENERGY_PERF_POLICY_ON_AC=performance"
+
+- name: Set CPU energy performance preference to balance power on BAT
+  ansible.builtin.lineinfile:
+    path: /etc/tlp.conf
+    regexp: "^CPU_ENERGY_PERF_POLICY_ON_BAT="
+    line: "CPU_ENERGY_PERF_POLICY_ON_BAT=balance_power"
+
+# * Other Settings
+- name: Disable USB autosuspend
+  ansible.builtin.lineinfile:
+    path: /etc/tlp.conf
+    regexp: "^USB_AUTOSUSPEND="
+    line: "USB_AUTOSUSPEND=0"
+
+- name: Disable disk autosuspend on AC
+  ansible.builtin.lineinfile:
+    path: /etc/tlp.conf
+    regexp: "^DISK_IDLE_SECS_ON_AC="
+    line: "DISK_IDLE_SECS_ON_AC=0"
+
+# * Service
+- name: Restart tlp.service
+  ansible.builtin.service:
+    name: tlp.service
+    state: restarted
+    enabled: true
+# Check with tlp-stat -c and tlp-stat -b

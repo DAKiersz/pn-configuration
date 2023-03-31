@@ -1,0 +1,82 @@
+username: dakiersz
+hostname: pn2
+timezone: Europe/London
+packages:
+  general:
+    - python3
+    - python3-pip
+    - ubuntu-restricted-extras
+    - font-manager
+    - calibre
+    - okular
+    - vlc
+    - qbittorrent
+    - git
+    - emacs
+    - hugo
+    - terraform
+    - ansible-lint
+    - vagrant
+    - powershell
+    - azure-cli
+    - packer
+    - kubectl
+    - virtualbox
+    - virtualbox-qt
+    - qemu-system
+    - htop
+    - speedtest-cli
+    - s-tui
+    - stress
+    - nfs-common
+    - lm-sensors
+    - ansible
+    - virtualenv
+    - virtualenvwrapper
+    - texlive-full
+    - texmaker
+    - gnome-tweaks
+    - gnome-shell-extensions
+    - signal-desktop
+    - curl
+    - wget
+    - zsh
+    - ca-certificates
+    - nmap
+    - hunspell-en-gb
+    - screenfetch
+    - smartmontools
+    - gparted
+    - gnome-disk-utility
+    - gnome-system-monitor
+    - stacer
+    - youtube-dl
+    - gufw
+  deps:
+    - libegli-mesa
+    - libegl1-mesa-glx
+  snap:
+    - postman
+  gem:
+    - winrm
+    - winrm-elevated
+  gaming:
+    - gamemode
+    - mangohud
+    - steaminstaller
+  pip:
+    - ansible
+    - ansible-lint
+    - ansible-review
+  tlp:
+    - tlp
+    - tlp-rdw
+    - tp-smapi-dkms
+    - acpi-call-dkms
+  docker:
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+    - docker-buildx-plugin
+    - docker-compose-plugin
+    - docker-compose

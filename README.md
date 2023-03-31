@@ -19,12 +19,12 @@ Active
 
 ### References 
 
-
+TBA
 
 ## To Add / Fix 
 
-* Proper roles in Ansible
-* Finish DSC
+* Develop a proper role in Ansible.
+* Finish DSC registry mayhem.
 
 ## Licence
 

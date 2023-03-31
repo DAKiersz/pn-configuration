@@ -1,0 +1,63 @@
+- name: Set a hostname
+  ansible.builtin.hostname:
+    name: "{{ hostname }}"
+
+- name: Ensure /etc/hosts contains the hostname
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    regexp: '^127\.0\.1\.1'
+    line: "127.0.1.1 {{ hostname }}.local {{ hostname }}"
+
+- name: Ensure the right timezone is set
+  community.general.timezone:
+    name: "{{ timezone }}"
+
+- name: Ensure pcscd is running
+  ansible.builtin.service:
+    name: pcscd
+    state: started
+    enabled: true
+
+- name: Reduce swappiness
+  ansible.posix.sysctl:
+    name: vm.swappiness
+    value: 10
+    sysctl_set: true
+    state: present
+    reload: true
+
+- name: Copy wallpaper to the home directory of the user
+  ansible.builtin.copy:
+    src: "{{ playbook_dir }}/resources/wallpaper-pn2.jpg"
+    dest: "/home/{{ username }}/wallpaper.jpg"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: 0644
+
+- name: Set GNOME Wallpaper
+  community.general.dconf: key="/org/gnome/desktop/background/picture-uri" value="'file:///home/{{ username }}/wallpaper.jpg'"
+
+- name: Set GNOME Wallpaper scale
+  community.general.dconf: key="/org/gnome/desktop/background/picture-options" value="'scaled'"
+
+- name: Set GNOME Wallpaper color-shading
+  community.general.dconf: key="/org/gnome/desktop/background/color-shading-type" value="'solid'"
+
+- name: Set color-scheme to prefer-dark
+  community.general.dconf: key="/org/gnome/desktop/interface/color-scheme" value="'prefer-dark'"
+
+- name: Set gtk-theme to Yaru-purple-dark
+  community.general.dconf: key="/org/gnome/desktop/interface/gtk-theme" value="'Yaru-purple-dark'"
+
+- name: Set icon-theme to Yaru-purple
+  community.general.dconf: key="/org/gnome/desktop/interface/icon-theme" value="'Yaru-purple'"
+
+- name: Show battery percentage
+  community.general.dconf: key="/org/gnome/desktop/interface/show-battery-percentage" value="true"
+
+- name: Disable report-technical-problems (telemetry)
+  community.general.dconf: key="/org/gnome/desktop/telemetry/report-technical-problems" value="false"
+  
+# TODO Add asus cert
+# TODO ensure ca-certificates is installed
+# TODO undervolt setting

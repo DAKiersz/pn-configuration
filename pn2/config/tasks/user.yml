@@ -1,0 +1,10 @@
+# Ensure the User is in the correct groups
+---
+- name: Ensure the User is in the correct groups
+  ansible.builtin.user:
+    name: "{{ username }}"
+    groups:
+      - sudo
+      - docker
+    append: true
+  become: true

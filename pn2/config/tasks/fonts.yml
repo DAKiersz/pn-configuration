@@ -1,0 +1,17 @@
+# TODO Test
+# Add Iosevka fonts
+- name: Download Iosevka fonts
+  ansible.builtin.get_url:
+    url: https://github.com/be5invis/Iosevka/releases/download/v21.0.0/ttc-iosevka-21.0.0.zip
+
+- name: Install Iosevka fonts
+  ansible.builtin.unarchive:
+    src: ttc-iosevka-21.0.0.zip
+    dest: /usr/share/fonts/truetype/iosevka
+    remote_src: yes
+    owner: root
+    group: root
+    mode: 0644
+    list_files: yes
+  register: iosevka_fonts
+  changed_when: false

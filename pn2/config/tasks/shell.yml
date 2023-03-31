@@ -1,0 +1,4 @@
+- name: Make zsh the default shell
+  ansible.builtin.shell: chsh -s /usr/bin/zsh {{ username }}
+# TODO Add Powerlevel10k theme, config, fonts
+# TODO SSH config

@@ -1,0 +1,140 @@
+# Install signal from repo
+# Source: https://signal.org/download
+- name: Add Signal GPG key
+  ansible.builtin.apt_key:
+    url: https://updates.signal.org/desktop/apt/keys.asc
+    state: present
+  register: signal_key
+
+- name: Add signal repository based on the key
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main
+    state: present
+    filename: signal-xenial
+    update_cache: true
+  register: signal_repo
+
+# Install terraform from repo
+# Source: https://www.terraform.io/downloads.html (Linux)
+- name: Add HashiCorp GPG key
+  ansible.builtin.apt_key:
+    url: https://apt.releases.hashicorp.com/gpg
+    state: present
+  register: hashicorp_key
+
+- name: Add HashiCorp repository based on the key
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main
+    state: present
+    filename: hashicorp
+    update_cache: true
+  register: hashicorp_repo
+
+# Install vscode from deb package
+# Source: https://code.visualstudio.com/docs/setup/linux
+- name: Download VSCode
+  ansible.builtin.get_url:
+    url: https://go.microsoft.com/fwlink/?LinkID=760868
+    dest: /tmp/vscode.deb
+    mode: 0644
+    force: true
+  register: vscode_download
+
+- name: Install VSCode
+  ansible.builtin.apt:
+    deb: /tmp/vscode.deb
+    state: present
+    update_cache: false
+  when: vscode_download is true
+
+# Install MSFT repos
+# Source: https://learn.microsoft.com/en-us/windows-server/administration/linux-package-repository-for-microsoft-software#package-and-repository-signing-key
+# Source: https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-linux?pivots=apt
+- name: Add Microsoft GPG key
+  ansible.builtin.apt_key:
+    url: https://packages.microsoft.com/keys/microsoft.asc
+    state: present
+  register: microsoft_key
+
+- name: Add Microsoft Ubuntu repo based on the key
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] https://packages.microsoft.com/ubuntu/22.04/prod/ {{ ansible_distribution_release }} main
+    state: present
+    filename: microsoft-ubuntu-repo
+    update_cache: true
+  register: microsoft_ubuntu_repo
+
+- name: Add Microsoft Azure CLI repo based on the key
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ {{ ansible_distribution_release }} main
+    state: present
+    filename: microsoft-azcli-repo
+    update_cache: true
+  register: microsoft_azcli_repo
+
+# Install Docker Engine from repo
+# Source: https://docs.docker.com/engine/install/ubuntu/
+- name: Add Docker GPG key
+  ansible.builtin.apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+  register: docker_key
+
+- name: Add Docker repository based on the key
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+    state: present
+    filename: docker
+    update_cache: true
+  register: docker
+
+- name: Install Docker Engine and Docker Compose
+  ansible.builtin.apt:
+    name: "{{ packages.docker }}"
+    state: present
+    update_cache: true
+  when: docker_key is true and docker is true
+
+# Install kubectl from repo
+# Source: https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#install-using-native-package-management
+- name: Add kubernetes GPG key
+  ansible.builtin.apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+  register: kubernetes_key
+
+- name: Add kubernetes repository based on the key
+  ansible.builtin.apt_repository:
+    repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+    state: present
+    filename: kubernetes
+    update_cache: true
+  register: kubernetes_repo
+
+# Install remaining packages from vars.yml
+- name: Install general packages
+  ansible.builtin.apt:
+    name: "{{ packages.general }}"
+    state: present
+    update_cache: true
+
+- name: Install snap packages
+  ansible.builtin.apt:
+    name: "{{ packages.snap }}"
+    state: present
+    update_cache: false
+  when: packages.snap is defined
+
+- name: install gem plugins
+  community.general.gem:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ packages.gem }}"
+  when: packages.gem is defined
+
+- name: Install gaming for pn1
+  ansible.builtin.apt:
+    name: "{{ packages.gaming }}"
+    state: present
+    update_cache: false
+  when: hostname == "pn1"

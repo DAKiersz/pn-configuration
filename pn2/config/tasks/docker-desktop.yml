@@ -1,0 +1,11 @@
+---
+- name: Download docker desktop to /tmp/
+  ansible.builtin.get_url:
+    url: "https://desktop.docker.com/linux/main/amd64/docker-desktop-4.17.0-amd64.deb"
+    dest: "/tmp/docker-desktop-4.17.0-amd64.deb"
+    mode: 0775
+
+- name: Install docker desktop
+  ansible.builtin.apt:
+    deb: "/tmp/docker-desktop-4.17.0-amd64.deb"
+    state: present

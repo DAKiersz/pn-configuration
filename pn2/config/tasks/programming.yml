@@ -1,0 +1,28 @@
+# TODO TEST
+## Install miniconda from a bash script
+## Source: https://docs.conda.io/en/latest/miniconda.html
+- name: Download Miniconda
+  ansible.builtin.get_url:
+    url: https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+    dest: /tmp/miniconda.sh
+    mode: 0644
+    force: true
+  register: miniconda_download
+
+- name: Install Miniconda
+  ansible.builtin.command: /tmp/miniconda.sh -b -p /opt/miniconda
+  when: miniconda_download is true
+
+## Install go 1.20 from a tarball
+## Source: https://golang.org/doc/install#install
+- name: Download Go
+  ansible.builtin.get_url:
+    url: https://golang.org/dl/go1.20.2.linux-amd64.tar.gz
+    dest: /tmp/go.tar.gz
+    mode: 0644
+    force: true
+  register: go_download
+
+- name: Install Go
+  ansible.builtin.command: tar -C /usr/local -xzf /tmp/go.tar.gz
+  when: go_download is true
