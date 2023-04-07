@@ -1,5 +1,4 @@
 # A DSC Template for configuring PN1 local machine
-
 Configuration PN1 {
 
     Import-DscResource -ModuleName 'PSDesiredStateConfiguration'
@@ -17,47 +16,55 @@ Configuration PN1 {
 
     Node localhost
     {
+        User dakiersz {
+            UserName    = 'dakiersz'
+            Ensure      = 'Present'
+            Description = 'The user for development on PN1'
+        }
+
+        # * Start Menu
         # Start Menu: Disable Bing Search
         Registry DisableBingSearch {
-            Ensure = 'Present'
-            Key = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Search'
+            Ensure    = 'Present'
+            Key       = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Search'
             ValueName = 'BingSearchEnabled'
             ValueData = 0
             ValueType = 'DWord'
         }
 
-        # TODO Disable Cortana fully
         # Start Menu: Disable Cortana
+        # TODO Disable Cortana fully
         Registry DisableCortanaSearch {
-            Ensure = 'Present'
-            Key = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Search'
+            Ensure    = 'Present'
+            Key       = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Search'
             ValueName = 'CortanaConsent'
             ValueData = 0
             ValueType = 'DWord'
         }
 
-        # TODO Disable location tracking fully
-
+        # * Advertising
         # Disable Advertising info
+        # TODO Disable location tracking fully
         File AdvertisingInfoTelemetry {
-            Ensure = 'Present'
+            Ensure          = 'Present'
             DestinationPath = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo'
-            Type = 'File'
+            Type            = 'File'
         }
         
         Registry DisableAdvertisingID {
-            Ensure = 'Present'
-            Key = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo'
+            Ensure    = 'Present'
+            Key       = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo'
             ValueName = 'Enabled'
             ValueData = 0
             ValueType = 'DWord'
             DependsOn = '[File]AdvertisingInfoTelemetry'
         }
 
-        # Disable Telemetry
+        # * Telemetry and Data Collection
+        # Disable General Telemetry (Data Collection)
         Registry DisableDatacollection {
-            Ensure = 'Present'
-            Key = 'HKLM:\Software\Policies\Microsoft\Windows\DataCollection'
+            Ensure    = 'Present'
+            Key       = 'HKLM:\Software\Policies\Microsoft\Windows\DataCollection'
             ValueName = 'AllowTelemetry'
             ValueData = 0
             ValueType = 'DWord'
@@ -65,14 +72,14 @@ Configuration PN1 {
 
         # Disable DiagTrack
         File DiagTrackTelemetry {
-            Ensure = 'Present'
+            Ensure          = 'Present'
             DestinationPath = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\DiagTrack'
-            Type = 'File'
+            Type            = 'File'
         }
 
         Registry DisableDiagTrack {
-            Ensure = 'Present'
-            Key = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\DiagTrack'
+            Ensure    = 'Present'
+            Key       = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\DiagTrack'
             ValueName = 'AllowTelemetry'
             ValueData = 0
             ValueType = 'DWord'
@@ -81,8 +88,8 @@ Configuration PN1 {
 
         # Disable Windows Error Reporting
         Registry DisableWindowsErrorReporting {
-            Ensure = 'Present'
-            Key = 'HKLM:\Software\Policies\Microsoft\Windows\Windows Error Reporting'
+            Ensure    = 'Present'
+            Key       = 'HKLM:\Software\Policies\Microsoft\Windows\Windows Error Reporting'
             ValueName = 'Disabled'
             ValueData = 1
             ValueType = 'DWord'
@@ -90,12 +97,14 @@ Configuration PN1 {
 
         # Disable Customer Experience Improvement Program
         Registry DisableCustomerExperienceImprovementProgram {
-            Ensure = 'Present'
-            Key = 'HKLM:\Software\Policies\Microsoft\SQMClient\Windows'
+            Ensure    = 'Present'
+            Key       = 'HKLM:\Software\Policies\Microsoft\SQMClient\Windows'
             ValueName = 'CEIPEnable'
             ValueData = 0
             ValueType = 'DWord'
         }
+
+        
     }
 }
 

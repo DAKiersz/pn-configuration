@@ -1,0 +1,41 @@
+username: dakiersz
+hostname: pn2
+timezone: Europe/London
+packages:
+  general:
+    - ubuntu-restricted-extras
+    - git
+    - terraform
+    - vagrant
+    - powershell
+    - azure-cli
+    - packer
+    - kubectl
+  deps:
+    - libegli-mesa
+    - libegl1-mesa-glx
+  snap:
+    - postman
+  gem:
+    - winrm
+    - winrm-elevated
+  gaming:
+    - gamemode
+    - mangohud
+    - steaminstaller
+  pip:
+    - ansible
+    - ansible-lint
+    - ansible-review
+  tlp:
+    - tlp
+    - tlp-rdw
+    - tp-smapi-dkms
+    - acpi-call-dkms
+  docker:
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+    - docker-buildx-plugin
+    - docker-compose-plugin
+    - docker-compose

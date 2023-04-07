@@ -15,7 +15,6 @@ packages:
     - emacs
     - hugo
     - terraform
-    - ansible-lint
     - vagrant
     - powershell
     - azure-cli
@@ -30,7 +29,6 @@ packages:
     - stress
     - nfs-common
     - lm-sensors
-    - ansible
     - virtualenv
     - virtualenvwrapper
     - texlive-full

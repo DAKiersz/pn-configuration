@@ -5,14 +5,5 @@
   connection: local
   become: true
 
-  tasks:
-  - name: general
-    include_tasks: tasks/general.yml
-  # - name: apt
-  #   include_tasks: tasks/apt.yml
-  # - name: pip
-  #   include_tasks: tasks/pip.yml
-  # - name: obsidian
-  #   include_tasks: tasks/obsidian.yml
-  - name: tlp
-    include_tasks: tasks/tlp.yml
+roles:
+  - role: pn2
