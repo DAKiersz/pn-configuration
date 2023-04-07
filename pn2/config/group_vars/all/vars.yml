@@ -66,6 +66,8 @@ packages:
     - ansible
     - ansible-lint
     - ansible-review
+    - pylint
+    - isort
   tlp:
     - tlp
     - tlp-rdw
