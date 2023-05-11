@@ -57,7 +57,6 @@
 
 - name: Disable report-technical-problems (telemetry)
   community.general.dconf: key="/org/gnome/desktop/telemetry/report-technical-problems" value="false"
-  
-# TODO Add asus cert
+# TODO Add ASUS router cert
 # TODO ensure ca-certificates is installed
-# TODO undervolt setting
+# TODO Undervolt setting

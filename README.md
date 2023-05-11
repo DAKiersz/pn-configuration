@@ -1,8 +1,8 @@
-# PN COnfiguration
+# PN Configuration
 
-**Version:** 0.1
+**Version:** 0.11 (Work in Progress)
 
-**Last Updated:** 28th Mar 2022
+**Last Updated:** 11th May 2023
 
 **Developer(s):** Dominik Kiersz
 
@@ -10,21 +10,21 @@
 
 A repository for storing my PC configuration - my feeble attempt at automating my package installation with popular tools.
 
-PN1 - Windows 10 (Powershell DSC)
-PN2 - Ubuntu LTS 22.04 (Ansible)
+* PN1 - Windows 10 (Powershell DSC)
+* PN2 - Ubuntu LTS 22.04 (Ansible)
 
 ## Project Status
 
-Active
+WIP
 
 ### References 
 
-TBA
+TBD
 
 ## To Add / Fix 
 
-* Develop a proper role in Ansible.
-* Finish DSC registry mayhem.
+* Complete the Ansible role for PN2.
+* Finish DSC registry mayhem for PN1.
 
 ## Licence
 

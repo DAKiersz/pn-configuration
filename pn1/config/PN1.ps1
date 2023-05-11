@@ -11,8 +11,8 @@ Configuration PN1 {
         Start-Process pwsh.exe -Verb runAs -ArgumentList '-NoProfile -ExecutionPolicy Bypass -File "$($MyInvocation.MyCommand.Path)"'
     }
     
-    # TODO look into LCM
-    # TODO metadata
+    # TODO Look into LCM
+    # TODO Metadata
 
     Node localhost
     {
@@ -22,32 +22,12 @@ Configuration PN1 {
             Description = 'The user for development on PN1'
         }
 
-        # * Start Menu
-        # Start Menu: Disable Bing Search
-        Registry DisableBingSearch {
-            Ensure    = 'Present'
-            Key       = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Search'
-            ValueName = 'BingSearchEnabled'
-            ValueData = 0
-            ValueType = 'DWord'
-        }
-
-        # Start Menu: Disable Cortana
-        # TODO Disable Cortana fully
-        Registry DisableCortanaSearch {
-            Ensure    = 'Present'
-            Key       = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Search'
-            ValueName = 'CortanaConsent'
-            ValueData = 0
-            ValueType = 'DWord'
-        }
-
-        # * Advertising
+        # * Privacy
         # Disable Advertising info
-        # TODO Disable location tracking fully
+        # TODO Disable location tracking fully...
         File AdvertisingInfoTelemetry {
             Ensure          = 'Present'
-            DestinationPath = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo'
+            DestinationPath = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo\Enabled'
             Type            = 'File'
         }
         
@@ -60,9 +40,9 @@ Configuration PN1 {
             DependsOn = '[File]AdvertisingInfoTelemetry'
         }
 
-        # * Telemetry and Data Collection
-        # Disable General Telemetry (Data Collection)
-        Registry DisableDatacollection {
+        # Disable Telemetry (from Data Collection)
+        # https://admx.help/?Category=Windows_10_2016&Policy=Microsoft.Policies.DataCollection::AllowTelemetry
+        Registry DisableDataCollectionTelemetry {
             Ensure    = 'Present'
             Key       = 'HKLM:\Software\Policies\Microsoft\Windows\DataCollection'
             ValueName = 'AllowTelemetry'
@@ -70,10 +50,10 @@ Configuration PN1 {
             ValueType = 'DWord'
         }
 
-        # Disable DiagTrack
+        # Disable Telemetry (from Diagtrack)
         File DiagTrackTelemetry {
             Ensure          = 'Present'
-            DestinationPath = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\DiagTrack'
+            DestinationPath = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\DiagTrack\AllowTelemetry'
             Type            = 'File'
         }
 
@@ -104,7 +84,25 @@ Configuration PN1 {
             ValueType = 'DWord'
         }
 
-        
+        # * Start Menu
+        # Start Menu: Disable Bing Search
+        Registry DisableBingSearch {
+            Ensure    = 'Present'
+            Key       = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Search'
+            ValueName = 'BingSearchEnabled'
+            ValueData = 0
+            ValueType = 'DWord'
+        }
+
+        # Start Menu: Disable Cortana
+        # TODO Disable Cortana fully
+        Registry DisableCortanaSearch {
+            Ensure    = 'Present'
+            Key       = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Search'
+            ValueName = 'CortanaConsent'
+            ValueData = 0
+            ValueType = 'DWord'
+        }
     }
 }
 

@@ -18,7 +18,7 @@
     regexp: "^TLP_ENABLE="
     line: "TLP_ENABLE=1"
 
-- name: Tlp default mode to AC
+- name: TLP default mode to AC
   ansible.builtin.lineinfile:
     path: /etc/tlp.conf
     regexp: "^TLP_DEFAULT_MODE="

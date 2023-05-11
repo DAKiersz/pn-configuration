@@ -1,5 +1,5 @@
-username: dakiersz
-hostname: pn2
+username: user
+hostname: host
 timezone: Europe/London
 packages:
   general:
@@ -19,10 +19,6 @@ packages:
   gem:
     - winrm
     - winrm-elevated
-  gaming:
-    - gamemode
-    - mangohud
-    - steaminstaller
   pip:
     - ansible
     - ansible-lint
@@ -39,3 +35,7 @@ packages:
     - docker-buildx-plugin
     - docker-compose-plugin
     - docker-compose
+  gaming:
+    - gamemode
+    - mangohud
+    - steaminstaller
