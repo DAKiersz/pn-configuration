@@ -16,6 +16,7 @@ packages:
     - libegl1-mesa-glx
   snap:
     - postman
+    - multipass
   gem:
     - winrm
     - winrm-elevated
