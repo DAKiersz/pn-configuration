@@ -86,14 +86,14 @@
     state: present
     filename: docker
     update_cache: true
-  register: docker
+  register: docker_repo
 
 - name: Install Docker Engine and Docker Compose
   ansible.builtin.apt:
     name: "{{ packages.docker }}"
     state: present
     update_cache: true
-  when: docker_key is true and docker is true
+  when: docker_key is true and docker_repo is true
 
 # Install kubectl from repo
 # Source: https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/#install-using-native-package-management
