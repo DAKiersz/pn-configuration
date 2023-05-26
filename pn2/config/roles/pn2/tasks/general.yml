@@ -11,15 +11,6 @@
     group: root
     mode: '0644'
 
-- name: Edit /etc/hosts file to add 127.0.0.1 entry
-  ansible.builtin.lineinfile:
-    path: /etc/hosts
-    insertafter: ^127\.0\.0\.1 *localhost
-    line: "127.0.0.1 {{ hostname }}"
-    owner: root
-    group: root
-    mode: '0644'
-
 - name: Update and upgrade packages 
   ansible.builtin.apt:
     update_cache: yes
