@@ -56,6 +56,10 @@ packages:
   snap:
     - postman
     - multipass
+    - semaphore
+    - drawio
+    - chromium
+    - cups
   gem:
     - winrm
     - winrm-elevated
