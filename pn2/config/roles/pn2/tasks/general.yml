@@ -37,7 +37,6 @@
   ansible.posix.sysctl:
     name: vm.swappiness
     value: 10
-    sysctl_set: true
     state: present
     reload: true
 
