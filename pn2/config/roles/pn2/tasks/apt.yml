@@ -50,6 +50,7 @@
 # Install MSFT repos
 # Source: https://learn.microsoft.com/en-us/windows-server/administration/linux-package-repository-for-microsoft-software#package-and-repository-signing-key
 # Source: https://learn.microsoft.com/en-us/cli/azure/install-azure-cli-linux?pivots=apt
+# Source: https://packages.microsoft.com/repos/edge/pool/main/m/microsoft-edge-dev/
 - name: Add Microsoft GPG key
   ansible.builtin.apt_key:
     url: https://packages.microsoft.com/keys/microsoft.asc
@@ -71,6 +72,15 @@
     filename: microsoft-azcli-repo
     update_cache: true
   register: microsoft_azcli_repo
+
+# ! Trial
+- name: Add Microsoft Edge repo based on the key
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] https://packages.microsoft.com/repos/edge/ stable main
+    state: present
+    filename: microsoft-edge-repo
+    update_cache: true
+  register: microsoft_edge_repo
 
 # Install Docker Engine from repo
 # Source: https://docs.docker.com/engine/install/ubuntu/
@@ -119,18 +129,10 @@
     update_cache: true
 
 - name: Install snap packages
-  ansible.builtin.apt:
+  ansible.builtin.snap:
     name: "{{ packages.snap }}"
     state: present
-    update_cache: false
   when: packages.snap is defined
-
-- name: install gem plugins
-  community.general.gem:
-    name: "{{ item }}"
-    state: present
-  loop: "{{ packages.gem }}"
-  when: packages.gem is defined
 
 - name: Install gaming for pn1
   ansible.builtin.apt:

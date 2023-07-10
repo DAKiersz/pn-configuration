@@ -8,10 +8,10 @@
   ansible.builtin.unarchive:
     src: ttc-iosevka-21.0.0.zip
     dest: /usr/share/fonts/truetype/iosevka
-    remote_src: yes
+    remote_src: true
     owner: root
     group: root
     mode: 0644
-    list_files: yes
+    list_files: true
   register: iosevka_fonts
   changed_when: false

@@ -50,6 +50,7 @@ packages:
     - stacer
     - youtube-dl
     - gufw
+    - microsoft-edge-stable
   deps:
     - libegli-mesa
     - libegl1-mesa-glx
@@ -58,11 +59,10 @@ packages:
     - multipass
     - semaphore
     - drawio
-    - chromium
     - cups
-  gem:
-    - winrm
-    - winrm-elevated
+  # gem:
+  #   - winrm
+  #   - winrm-elevated
   gaming:
     - gamemode
     - mangohud

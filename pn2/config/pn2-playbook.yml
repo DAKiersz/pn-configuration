@@ -5,5 +5,5 @@
   connection: local
   become: true
 
-roles:
-  - role: pn2
+  roles:
+    - pn2

@@ -11,11 +11,11 @@
     group: root
     mode: '0644'
 
-- name: Update and upgrade packages 
+- name: Update and upgrade packages
   ansible.builtin.apt:
-    update_cache: yes
-    upgrade: yes
-    autoremove: yes
+    update_cache: true
+    upgrade: true
+    autoremove: true
 
 - name: Ensure the right timezone is set
   community.general.timezone:
@@ -24,12 +24,6 @@
 - name: Ensure pcscd is running
   ansible.builtin.service:
     name: pcscd
-    state: started
-    enabled: true
-
-- name: Ensure ntp is running
-  ansible.builtin.service:
-    name: ntp
     state: started
     enabled: true
 
@@ -71,6 +65,7 @@
 
 - name: Disable report-technical-problems (telemetry)
   community.general.dconf: key="/org/gnome/desktop/telemetry/report-technical-problems" value="false"
+
 # TODO Add ASUS router cert
 # TODO ensure ca-certificates is installed
-# TODO Undervolt setting
+# TODO Undervolt settings

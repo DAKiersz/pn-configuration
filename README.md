@@ -1,8 +1,8 @@
 # PN Configuration
 
-**Version:** 0.11 (Work in Progress)
+**Version:** 0.12 (Work in Progress)
 
-**Last Updated:** 11th May 2023
+**Last Updated:** 10th July 2023
 
 **Developer(s):** Dominik Kiersz
 
